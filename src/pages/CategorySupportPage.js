@@ -44,15 +44,17 @@ const CategorySupportPage = () => {
   const [newComment, setNewComment] = useState(''); // stato per il commento
 
   useEffect(() => {
-    axios.get('http://localhost:3002/idee')
-      .then((res) => {
-        const filteredIdeas = res.data.filter((idea) =>
-          idea.genre === genre && idea.type === 'supporto'
-        );
-        setSupportData(filteredIdeas);
-      })
-      .catch((err) => console.error('Errore caricamento supporti:', err));
-  }, [genre]);
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
+  axios.get(`${baseUrl}/idee`)
+    .then((res) => {
+      const filteredIdeas = res.data.filter((idea) =>
+        idea.genre === genre && idea.type === 'supporto'
+      );
+      setSupportData(filteredIdeas);
+    })
+    .catch((err) => console.error('Errore caricamento supporti:', err));
+}, [genre]);
 
   // Funzione per gestire l'invio del commento
   const handleSubmitComment = async (ideaId) => {
@@ -71,9 +73,13 @@ const CategorySupportPage = () => {
       };
 
       // Invia il commento al server
-      const res = await axios.post(`http://localhost:3002/idee/${ideaId}/commenti`, commentData, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const res = await axios.post(
+  `${process.env.REACT_APP_API_BASE_URL}/idee/${ideaId}/commenti`,
+  commentData,
+  {
+    headers: { Authorization: `Bearer ${user.token}` },
+  }
+);
 
       // Aggiungi il commento alla lista dei commenti dell'idea
       setSupportData((prevSupportData) =>

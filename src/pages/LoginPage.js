@@ -109,17 +109,17 @@ const LoginPage = ({ onLogin }) => {
   const handleGoogleLoginSuccess = (response) => {
     const { credential } = response;
 
-    axios.post('http://localhost:3002/auth/google', { token: credential })
-      .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        setMessage('Login con Google riuscito!');
-        onLogin(res.data);
-        console.log('Login con Google:', res.data);
-      })
-      .catch((err) => {
-        setError('Errore nel login con Google.');
-        console.error('Errore autenticazione Google:', err);
-      });
+    axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/google`, { token: credential })
+  .then((res) => {
+    localStorage.setItem('token', res.data.token);
+    setMessage('Login con Google riuscito!');
+    onLogin(res.data);
+    console.log('Login con Google:', res.data);
+  })
+  .catch((err) => {
+    setError('Errore nel login con Google.');
+    console.error('Errore autenticazione Google:', err);
+  });
   };
 
   const handleGoogleLoginFailure = (error) => {
@@ -134,14 +134,17 @@ const LoginPage = ({ onLogin }) => {
     setMessage('');
 
     try {
-      const res = await axios.post('http://localhost:3002/login', { email, password });
-      localStorage.setItem('token', res.data.token);
-      setMessage('Login tradizionale riuscito!');
-      onLogin(res.data);
-    } catch (err) {
-      setError('Email o password non validi.');
-      console.error('Errore login tradizionale:', err);
-    }
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/login`,
+    { email, password }
+  );
+  localStorage.setItem('token', res.data.token);
+  setMessage('Login tradizionale riuscito!');
+  onLogin(res.data);
+} catch (err) {
+  setError('Email o password non validi.');
+  console.error('Errore login tradizionale:', err);
+}
   };
 
   // REGISTRAZIONE
@@ -151,11 +154,14 @@ const LoginPage = ({ onLogin }) => {
     setMessage('');
 
     try {
-      const res = await axios.post('http://localhost:3002/users', {
-        name,
-        email,
-        password
-      });
+      const res = await axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/users`,
+    {
+      name,
+      email,
+      password
+    }
+    );
 
       localStorage.setItem('token', res.data.token);
       setMessage('Registrazione riuscita! Effettuato accesso.');

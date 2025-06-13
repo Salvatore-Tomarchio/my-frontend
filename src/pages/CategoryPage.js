@@ -11,7 +11,11 @@ const CategoryPage = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-  axios.get(`http://localhost:3002/idee?genre=${genre}`)
+  if (!genre) return;
+
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
+  axios.get(`${baseUrl}/idee?genre=${genre}`)
     .then((res) => setIdeas(res.data))
     .catch((err) => console.error('Errore caricamento idee:', err));
 }, [genre]);
@@ -20,11 +24,12 @@ const CategoryPage = () => {
     if (!user) return;
 
     const hasVoted = user && idea.upvotes.includes(user._id);
+    const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
     try {
       const url = hasVoted
-        ? `http://localhost:3002/idee/${idea._id}/remove-upvote`
-        : `http://localhost:3002/idee/${idea._id}/upvote`;
+        ? `${baseUrl}/idee/${idea._id}/remove-upvote`
+        : `${baseUrl}/idee/${idea._id}/upvote`;
 
       await axios.post(url, {}, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -59,9 +64,13 @@ const CategoryPage = () => {
         user: user._id
       };
 
-      const res = await axios.post('http://localhost:3002/idee', newIdea, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const res = await axios.post(
+  `${process.env.REACT_APP_API_BASE_URL}/idee`,
+  newIdea,
+  {
+    headers: { Authorization: `Bearer ${user.token}` },
+  }
+);
 
       setIdeas([res.data, ...ideas]); // aggiungi in cima
       setNewIdeaContent('');

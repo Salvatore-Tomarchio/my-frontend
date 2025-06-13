@@ -1,0 +1,84 @@
+/* HomePage.css */
+.homepage {
+  text-align: center;
+  padding: 2rem;
+}
+
+.categories-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-card {
+  background-color: orange;
+  color: white;
+  padding: 20px 40px;
+  transform: skewX(-20deg);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.category-card:hover {
+  background-color: darkorange;
+}
+
+.category-text {
+  transform: skewX(20deg); /* annulla l'effetto sul testo */
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.category-options {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column; /* verticale */
+  gap: 10px;
+  align-items: center;
+}
+
+.category-options button {
+  padding: 8px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 120px;
+}
+
+.category-options button:hover {
+  background-color: #222;
+}
+
+.category-content {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #f4f4f4;
+  border-left: 5px solid orange;
+  border-radius: 4px;
+  width: 250px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .categories-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category-card {
+    width: 200px;
+    text-align: center;
+  }
+}

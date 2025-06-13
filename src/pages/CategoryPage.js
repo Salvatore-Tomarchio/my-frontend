@@ -1,0 +1,123 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import './CategoryIdeaPage.css';
+
+const CategoryPage = () => {
+  const { genre } = useParams(); // film, musica o libri
+  const [ideas, setIdeas] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [newIdeaContent, setNewIdeaContent] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
+  axios.get(`http://localhost:3002/idee?genre=${genre}`)
+    .then((res) => setIdeas(res.data))
+    .catch((err) => console.error('Errore caricamento idee:', err));
+}, [genre]);
+
+  const handleToggleUpvote = async (idea) => {
+    if (!user) return;
+
+    const hasVoted = user && idea.upvotes.includes(user._id);
+
+    try {
+      const url = hasVoted
+        ? `http://localhost:3002/idee/${idea._id}/remove-upvote`
+        : `http://localhost:3002/idee/${idea._id}/upvote`;
+
+      await axios.post(url, {}, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      // Aggiorna localmente lo stato
+      setIdeas((prevIdeas) =>
+        prevIdeas.map((i) =>
+          i._id === idea._id
+            ? {
+                ...i,
+                upvotes: hasVoted
+                  ? i.upvotes.filter((id) => id !== user._id)
+                  : [...i.upvotes, user._id],
+              }
+            : i
+        )
+      );
+    } catch (err) {
+      console.error('Errore toggle upvote:', err);
+    }
+  };
+
+  const handleSubmitIdea = async () => {
+    if (!user || !newIdeaContent.trim()) return;
+
+    try {
+      const newIdea = {
+        genre, // <-- prende quello dalla URL
+        type: 'idea',
+        content: newIdeaContent.trim(),
+        user: user._id
+      };
+
+      const res = await axios.post('http://localhost:3002/idee', newIdea, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      setIdeas([res.data, ...ideas]); // aggiungi in cima
+      setNewIdeaContent('');
+      setShowForm(false);
+    } catch (err) {
+      console.error('Errore invio nuova idea:', err);
+    }
+  };
+
+  return (
+    <div className="idea-chat-container">
+      <h2>Idee</h2>
+
+      {user && (
+        <div className="submit-idea-section">
+          <button onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Annulla' : 'Condividi un\'idea'}
+          </button>
+
+          {showForm && (
+            <div className="idea-form">
+              <textarea
+                value={newIdeaContent}
+                onChange={(e) => setNewIdeaContent(e.target.value)}
+                placeholder="Scrivi la tua idea..."
+              />
+              <button onClick={handleSubmitIdea}>Invia</button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!user && <p style={{ color: 'gray' }}>Accedi per condividere un'idea.</p>}
+
+      <div className="idea-chat-list">
+        {ideas.map((idea) => (
+          <div key={idea._id} className="idea-bubble">
+            <p className="idea-author">
+              {idea.author?.name || idea.author?.email || 'Anonimo'}
+            </p>
+            <p className="idea-content">{idea.content}</p>
+            <div className="idea-footer">
+              <button
+                className={`upvote-button ${user && idea.upvotes.includes(user._id) ? 'voted' : ''}`}
+                onClick={() => handleToggleUpvote(idea)}
+                disabled={!user}
+              >
+                👍
+              </button>
+              <span>{idea.upvotes.length}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CategoryPage;

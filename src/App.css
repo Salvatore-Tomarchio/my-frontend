@@ -1,38 +1,108 @@
 .App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  color: #333;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Navbar principale */
+.navbar {
+  background-color: #f36f09; /* Sfondo arancio fisso */
+  padding: 10px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: relative; /* Necessario per la gestione della posizione dei pulsanti */
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+/* Tema light */
+.navbar.light {
+  color: white; /* Testo bianco */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.navbar.light button {
+  color: black; /* Bottoni neri */
+  background-color: white; /* Sfondo bianco per i bottoni */
+}
+
+.navbar.light button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Tema dark */
+.navbar.dark {
+  color: black; /* Testo nero */
+}
+
+.navbar.dark button {
+  color: white; /* Bottoni bianchi */
+  background-color: black; /* Sfondo nero per i bottoni */
+}
+
+.navbar.dark button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Logo navbar */
+.navbar .logo a {
+  font-size: 24px;
+  font-weight: bold;
+  color: inherit; /* Usa il colore ereditato dalla navbar */
+  text-decoration: none; /* Rimuovi la sottolineatura dal link */
+  margin-left: 20px;
+}
+
+/* Menu principale */
+.navbar .menu {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Bottone del menu toggle (hamburger) */
+.navbar .toggle-menu {
+  display: none;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  /* Navbar menu su mobile: Nasconde il menu finché non viene cliccato */
+  .navbar .menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #fff;
+    z-index: 10;
+    padding: 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+  /* Visualizza il menu se attivo */
+  .navbar .menu.active {
+    display: flex;
+  }
+
+  /* Mostra l'icona dell'hamburger */
+  .navbar .toggle-menu {
+    display: block;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    margin-right: 20px;
+  }
+
+  /* Sistema il logo su mobile */
+  .navbar .logo {
+    margin-left: 0;
+    font-size: 22px;
   }
 }

@@ -15,7 +15,7 @@ const CategoryPage = () => {
 
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-  axios.get(`${baseUrl}/idee?genre=${genre}`)
+  axios.get(`${baseUrl}/idee?genre=${genre}&type=idea`)
     .then((res) => setIdeas(res.data))
     .catch((err) => console.error('Errore caricamento idee:', err));
 }, [genre]);
@@ -57,20 +57,21 @@ const CategoryPage = () => {
     if (!user || !newIdeaContent.trim()) return;
 
     try {
+      console.log('il mio utente:', user);
+
       const newIdea = {
         genre, // <-- prende quello dalla URL
         type: 'idea',
         content: newIdeaContent.trim(),
-        user: user._id
       };
 
       const res = await axios.post(
-  `${process.env.REACT_APP_API_BASE_URL}/idee`,
-  newIdea,
-  {
-    headers: { Authorization: `Bearer ${user.token}` },
-  }
-);
+        `${process.env.REACT_APP_API_BASE_URL}/idee`,
+        newIdea,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
 
       setIdeas([res.data, ...ideas]); // aggiungi in cima
       setNewIdeaContent('');
@@ -109,7 +110,7 @@ const CategoryPage = () => {
         {ideas.map((idea) => (
           <div key={idea._id} className="idea-bubble">
             <p className="idea-author">
-              {idea.author?.name || idea.author?.email || 'Anonimo'}
+              {idea.user?.name || idea.user?.email || 'Anonimo'}
             </p>
             <p className="idea-content">{idea.content}</p>
             <div className="idea-footer">

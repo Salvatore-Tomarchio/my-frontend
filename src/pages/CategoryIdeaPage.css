@@ -1,8 +1,12 @@
 .idea-chat-container {
-  max-width: 600px;
+  max-width: 900px; /* o 100% per larghezza fluida */
+  width: 90%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem;
+  margin-bottom: 200px;
+  margin-top: 50px;
 }
+
 
 .idea-chat-list {
   display: flex;

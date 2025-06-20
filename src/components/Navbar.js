@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css'
 import { FaSun, FaMoon } from 'react-icons/fa';  // Per le icone di cambio tema
@@ -10,6 +10,11 @@ const Navbar = ({ toggleTheme, currentTheme, onLoginLogout, user }) => {
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Applica la classe corrispondente al tema (dark o light)
+  useEffect(() => {
+    document.body.className = currentTheme; // Imposta il tema globale sul body
+  }, [currentTheme]);
 
   return (
     <nav className={`navbar ${currentTheme}`}>
@@ -40,7 +45,7 @@ const Navbar = ({ toggleTheme, currentTheme, onLoginLogout, user }) => {
           </Link>
         )}
         <button onClick={() => window.scrollTo(0, document.body.scrollHeight)}>
-          Problemi
+          Contatti
         </button>
       </div>
     </nav>

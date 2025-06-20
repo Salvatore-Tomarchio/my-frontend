@@ -1,32 +1,28 @@
-.App {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  text-align: center;
+/* Default (Light) */
+body {
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1 {
-  color: #333;
-}
-
-/* Navbar principale */
 .navbar {
   background-color: #f36f09; /* Sfondo arancio fisso */
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Necessario per la gestione della posizione dei pulsanti */
+  position: relative;
   transition: background-color 0.3s ease;
 }
 
 /* Tema light */
 .navbar.light {
-  color: white; /* Testo bianco */
+  color: white;
 }
 
 .navbar.light button {
-  color: black; /* Bottoni neri */
-  background-color: white; /* Sfondo bianco per i bottoni */
+  color: black;
+  background-color: white;
 }
 
 .navbar.light button:hover {
@@ -34,13 +30,18 @@ h1 {
 }
 
 /* Tema dark */
+body.dark {
+  background-color: #333; /* Sfondo scuro per tutto l'app */
+  color: #fff; /* Testo bianco per il tema scuro */
+}
+
 .navbar.dark {
-  color: black; /* Testo nero */
+  color: white;
 }
 
 .navbar.dark button {
-  color: white; /* Bottoni bianchi */
-  background-color: black; /* Sfondo nero per i bottoni */
+  color: white;
+  background-color: black;
 }
 
 .navbar.dark button:hover {
@@ -51,8 +52,8 @@ h1 {
 .navbar .logo a {
   font-size: 24px;
   font-weight: bold;
-  color: inherit; /* Usa il colore ereditato dalla navbar */
-  text-decoration: none; /* Rimuovi la sottolineatura dal link */
+  color: inherit;
+  text-decoration: none;
   margin-left: 20px;
 }
 

@@ -1,95 +1,3 @@
-// import './LoginPage.css';
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import { GoogleLogin } from '@react-oauth/google';
-
-// const LoginPage = ({onLogin}) => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
-//   const [message, setMessage] = useState('');
-
-//   // Login con Google
-//   const handleGoogleLoginSuccess = (response) => {
-//     const { credential } = response;
-
-//     axios.post('http://localhost:3002/auth/google', { token: credential })
-//       .then((res) => {
-//         // Salva il token JWT nel localStorage
-//         localStorage.setItem('token', res.data.token);
-
-//         setMessage('Login con Google riuscito!');
-//         onLogin(res.data)
-//         console.log('Login con Google:', res.data);
-//       })
-//       .catch((err) => {
-//         setError('Errore nel login con Google.');
-//         console.error('Errore autenticazione Google:', err);
-//       });
-//   };
-
-//   // Gestione errore login Google
-//   const handleGoogleLoginFailure = (error) => {
-//     console.error('Google Login Failed:', error);
-//     setError('Errore durante il login con Google. Riprova.');
-//   };
-
-//   // Login tradizionale
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-    
-//     try {
-//       const res = await axios.post('http://localhost:3002/login', { email, password });
-
-//     // Salva il token JWT nel localStorage
-//      localStorage.setItem('token', res.data.token);
-
-//     setMessage('Login tradizionale riuscito!');
-//      console.log('Login tradizionale:', res.data);
-//     } catch (err) {
-//       setError('Email o password non validi.');
-//       console.error('Errore login tradizionale:', err);
-//     }
-//   };
-
-//   return (
-//     <div className="login-container">
-//       <h1>Login</h1>
-
-//       {error && <p style={{ color: 'red' }}>{error}</p>}
-//       {message && <p style={{ color: 'green' }}>{message}</p>}
-
-//       <form onSubmit={handleSubmit}>
-//         <label>Email:</label>
-//         <input 
-//           type="email" 
-//           value={email} 
-//           onChange={(e) => setEmail(e.target.value)} 
-//           required 
-//         />
-        
-//         <label>Password:</label>
-//         <input 
-//           type="password" 
-//           value={password} 
-//           onChange={(e) => setPassword(e.target.value)} 
-//           required 
-//         />
-
-//         <button type="submit">Login</button>
-//       </form>
-
-//       <p>Oppure accedi con Google:</p>
-//       <GoogleLogin
-//         onSuccess={handleGoogleLoginSuccess}
-//         onError={handleGoogleLoginFailure}
-//       />
-//     </div>
-//   );
-// };
-
-// export default LoginPage;
-
 import './LoginPage.css';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -127,7 +35,7 @@ const LoginPage = ({ onLogin }) => {
     setError('Errore durante il login con Google. Riprova.');
   };
 
-  // LOGIN TRADIZIONALE
+  // Login tradizionale
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
@@ -147,7 +55,7 @@ const LoginPage = ({ onLogin }) => {
 }
   };
 
-  // REGISTRAZIONE
+  // Registrazione
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');

@@ -1,6 +1,6 @@
 .category-content {
   width: 90%;
-  min-height: 80vh;  /* 👈 altezza minima pari all'80% dello schermo */
+  min-height: 80vh;
   margin: 0 auto;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -1,12 +1,11 @@
 .idea-chat-container {
-  max-width: 900px; /* o 100% per larghezza fluida */
+  max-width: 900px;
   width: 90%;
   margin: 0 auto;
   padding: 2rem;
   margin-bottom: 200px;
   margin-top: 50px;
 }
-
 
 .idea-chat-list {
   display: flex;
@@ -15,11 +14,11 @@
 }
 
 .idea-bubble {
-  background-color: #f0f0f0;
   border-radius: 20px;
   padding: 1rem;
   position: relative;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .idea-author {
@@ -92,4 +91,16 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+/* Tema Light */
+body.light .idea-bubble {
+  background-color: #333; /* Sfondo nero */
+  color: #fff; /* Testo bianco */
+}
+
+/* Tema Dark  */
+body.dark .idea-bubble {
+  background-color: #fff; /* Sfondo bianco */
+  color: #000; /* Testo nero */
 }
